@@ -1,0 +1,52 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <title>WebGIS Google Maps Tugas 1</title>
+    <meta name="viewport" content="initial-scale=1.0, user-scalable=no" />
+    <meta charset="utf-8">
+    <style type="text/css">
+      html { height: 100% }
+      body { height: 100%; margin: 0; padding: 0 }
+      #map-canvas { width: 100%; height: 700px; }
+    </style>
+	  <script type="text/javascript" src="https://maps.google.com/maps/api/js?key=AIzaSyAs2TvuoK7nMHfo9wjK3owAlzp-ai9wzbY"></script>
+	
+    <script>
+      function initialize() {
+        var mapOptions = {
+          center: new google.maps.LatLng(-8.7467357, 115.1668024),
+          zoom: 13,
+          mapTypeId: google.maps.MapTypeId.ROADMAP
+        };
+		
+        var map = new google.maps.Map(document.getElementById("map-canvas"), mapOptions);
+
+        var marker = new google.maps.Marker({
+          position: mapOptions.center,
+          map: map,
+          draggable: true,
+          title: 'Marker'
+        });
+
+        var infoWindow = new google.maps.InfoWindow();
+
+      google.maps.event.addListener(marker, 'dragend', function () {
+        var newPosition = marker.getPosition();
+        infoWindow.setContent('Koordinat: ' + newPosition.lat().toFixed(7) + ', ' + newPosition.lng().toFixed(7));
+        infoWindow.open(map, marker);
+      });
+
+      google.maps.event.addListener(marker, 'click', function () {
+        infoWindow.setContent(marker.title);
+        infoWindow.open(map, marker);
+      });
+
+      }
+      google.maps.event.addDomListener(window, 'load', initialize);
+    </script>
+  </head>
+  <body>
+    <h1>Objek Peta Google Maps dengan Draggable Marker</h1>
+    <div id="map-canvas"></div>
+  </body>
+</html>
